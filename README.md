@@ -1,17 +1,30 @@
-# flutter_advanced_calculator
+# Advanced Mobile Calculator 🧮
 
-A new Flutter project.
+## Project Description
+Đây là ứng dụng máy tính nâng cao được xây dựng bằng Flutter, hỗ trợ 3 chế độ: Basic, Scientific và Programmer. Ứng dụng tích hợp quản lý trạng thái phức tạp, phân tích biểu thức toán học và lưu trữ dữ liệu cục bộ.
 
-## Getting Started
+## Features
+- 3 Chế độ: Basic, Scientific, Programmer.
+- Xử lý toán học phức tạp (PEMDAS, Lượng giác, Logarit, Bộ nhớ).
+- Lưu trữ lịch sử tính toán (Tối đa 50 phép tính).
+- Hỗ trợ Light / Dark Mode.
 
-This project is a starting point for a Flutter application.
+## Screenshots
+<img width="1920" height="1080" alt="Screenshot 2026-04-19 152444" src="https://github.com/user-attachments/assets/02d0e377-7cb6-412e-b5e6-06d689041c88" />
+*(Thêm ảnh Scientific và Programmer tương tự)*
 
-A few resources to get you started if this is your first Flutter project:
+## Architecture Diagram
+Dự án sử dụng Clean Architecture kết hợp với Provider State Management.
+*(Bro có thể vẽ một hình khối đơn giản trên draw.io rồi chèn link vào đây, hoặc tham khảo file `docs/ARCHITECTURE.md`)*
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Setup Instructions
+1. Clone repository này về máy.
+2. Chạy lệnh `flutter pub get` để tải các thư viện.
+3. Chạy `flutter run` để khởi chạy ứng dụng.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Testing Instructions
+Chạy lệnh `flutter test` để chạy các Unit Test kiểm tra logic toán học.
+
+## Known Limitations & Future Improvements
+- **Hạn chế:** Chế độ Programmer chưa hỗ trợ tính toán số Hex quá lớn.
+- **Tương lai:** Bổ sung vẽ đồ thị hàm số và hỗ trợ xoay màn hình ngang (Landscape mode).
