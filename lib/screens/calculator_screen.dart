@@ -4,7 +4,9 @@ import '../providers/calculator_provider.dart';
 import '../models/calculator_mode.dart';
 import '../widgets/display_area.dart';
 import '../widgets/mode_selector.dart';
-import '../widgets/button_grid.dart'; // Đảm bảo import BasicButtonGrid
+import '../widgets/button_grid.dart';
+import '../widgets/scientific_button_grid.dart';
+import '../widgets/programmer_view.dart';
 
 class CalculatorScreen extends StatelessWidget {
   const CalculatorScreen({Key? key}) : super(key: key);
@@ -16,25 +18,25 @@ class CalculatorScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Khu vực hiển thị (Màn hình máy tính) [cite: 87, 88]
+            // Khu vực hiển thị (Màn hình máy tính)
             const Expanded(
               flex: 3,
               child: DisplayArea(),
             ),
 
-            // Thanh điều hướng chế độ và cài đặt [cite: 95]
+            // Thanh điều hướng chế độ và cài đặt
             const ModeSelector(),
 
-            // Khu vực phím bấm [cite: 98]
+            // Khu vực phím bấm
             Expanded(
               flex: 6,
               child: Consumer<CalculatorProvider>(
                 builder: (context, provider, child) {
-                  // Hiển thị lưới tương ứng với Mode [cite: 176]
+                  // Hiển thị lưới tương ứng với Mode
                   if (provider.mode == CalculatorMode.scientific) {
-                    return const Center(child: Text('Scientific Grid 6x6')); 
+                    return const ScientificButtonGrid(); 
                   } else if (provider.mode == CalculatorMode.programmer) {
-                    return const Center(child: Text('Programmer View'));
+                    return const ProgrammerView();
                   }
                   return const BasicButtonGrid();
                 },
