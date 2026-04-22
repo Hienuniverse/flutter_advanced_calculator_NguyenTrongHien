@@ -10,7 +10,7 @@ class CalculatorProvider extends ChangeNotifier {
   double _memory = 0;
   bool _hasMemory = false;
 
-  //Getters để UI có thể đọc dữ liệu
+  // Getters để UI truy xuất dữ liệu
   String get expression => _expression;
   String get result => _result;
   CalculatorMode get mode => _mode;
@@ -18,61 +18,57 @@ class CalculatorProvider extends ChangeNotifier {
   double get memory => _memory;
   bool get hasMemory => _hasMemory;
 
-  // --- Các phương thức xử lý (Methods) ---
-
+  // Thêm giá trị vào biểu thức (số, toán tử)
   void addToExpression(String value) {
     _expression += value;
     notifyListeners();
   }
 
+  // Hàm tính toán chính
   void calculate() {
     if (_expression.isEmpty) return;
 
     try {
-      //1. Chuẩn hóa chuỗi (Sanitize Expression)
+      // 1. Chuẩn hóa biểu thức sang định dạng máy tính hiểu được
       String finalExpression = _expression
           .replaceAll('×', '*')
           .replaceAll('÷', '/')
           .replaceAll('π', '3.14159265359')
           .replaceAll('e', '2.71828182846')
-          .replaceAll('%', '/100'); //Xử lý phần trăm
+          .replaceAll('%', '/100');
 
-      //2. Phân tích và tính toán
+      // 2. Sử dụng thư viện math_expressions để phân tích chuỗi
       Parser p = Parser();
       Expression exp = p.parse(finalExpression);
-      
       ContextModel cm = ContextModel();
       
-      //Tính toán kết quả thực tế
       double eval = exp.evaluate(EvaluationType.REAL, cm);
 
-      //3. Xử lý các trường hợp lỗi như chia cho 0
+      // 3. Xử lý kết quả và các trường hợp lỗi
       if (eval.isInfinite || eval.isNaN) {
         _result = 'Error: Division by zero';
       } else {
-        //Làm đẹp kết quả: Xóa đuôi ".0" nếu là số nguyên
+        // Định dạng lại kết quả: bỏ đuôi .0 nếu là số nguyên
         _result = eval.toString();
         if (_result.endsWith('.0')) {
           _result = _result.substring(0, _result.length - 2);
         }
       }
-
-      // TODO: Gọi hàm từ HistoryProvider để lưu vào lịch sử tại đây [cite: 17, 122]
-
     } catch (e) {
-      //Bắt lỗi khi người dùng nhập sai cú pháp
       _result = 'Error: Invalid input';
     }
     
-    notifyListeners(); //Báo cho UI cập nhật
+    notifyListeners();
   }
 
+  // Xóa toàn bộ
   void clear() {
     _expression = '';
     _result = '0';
     notifyListeners();
   }
 
+  // Xóa ký tự cuối cùng (Backspread)
   void clearEntry() {
     if (_expression.isNotEmpty) {
       _expression = _expression.substring(0, _expression.length - 1);
@@ -80,52 +76,73 @@ class CalculatorProvider extends ChangeNotifier {
     }
   }
 
+  // Đổi chế độ máy tính (Basic/Scientific/Programmer)
   void toggleMode(CalculatorMode newMode) {
     _mode = newMode;
     notifyListeners();
   }
 
+  // Đổi đơn vị góc (DEG/RAD)
   void toggleAngleMode() {
     _angleMode = _angleMode == AngleMode.degrees ? AngleMode.radians : AngleMode.degrees;
     notifyListeners();
   }
 
+  // SỬA LỖI: Hàm đổi dấu âm/dương (toggleSign)
   void toggleSign() {
-    if (_result != '0' && !_result.startsWith('Error')) {
+    if (_expression.isEmpty && _result != '0' && !_result.startsWith('Error')) {
+      // Đổi dấu dựa trên kết quả trước đó
       if (_result.startsWith('-')) {
-        _result = _result.substring(1); //Bỏ dấu trừ
+        _expression = _result.substring(1);
       } else {
-        _result = '-$_result'; //Thêm dấu trừ
+        _expression = '-$_result';
       }
-      notifyListeners();
+    } else if (_expression.isNotEmpty) {
+      // Đổi dấu biểu thức đang nhập bằng cách bọc ngoặc
+      if (_expression.startsWith('-(') && _expression.endsWith(')')) {
+        _expression = _expression.substring(2, _expression.length - 1);
+      } else if (_expression.startsWith('-')) {
+        _expression = _expression.substring(1);
+      } else {
+        _expression = '-($_expression)';
+      }
+    } else {
+      _expression = '-';
     }
+    notifyListeners();
   }
 
+  // Thêm ký hiệu %
   void addPercentage() {
     addToExpression('%');
   }
 
+  // Thêm các hàm khoa học (sin, cos, log...)
   void addScientificFunction(String func) {
-    addToExpression('$func('); //Thêm hàm khoa học kèm dấu ngoặc mở, VD: sin(
+    addToExpression('$func(');
   }
 
-  // --- Các hàm bộ nhớ (Memory Functions) ---
+  // --- CÁC HÀM BỘ NHỚ (MEMORY) ---
 
   void memoryAdd() {
-    _memory += double.tryParse(_result) ?? 0;
+    double currentVal = double.tryParse(_result) ?? 0;
+    _memory += currentVal;
     _hasMemory = true;
     notifyListeners();
   }
 
   void memorySubtract() {
-    _memory -= double.tryParse(_result) ?? 0;
+    double currentVal = double.tryParse(_result) ?? 0;
+    _memory -= currentVal;
     _hasMemory = true;
     notifyListeners();
   }
 
   void memoryRecall() {
-    // Đưa giá trị từ bộ nhớ vào chuỗi tính toán
-    addToExpression(_memory.toString());
+    // Gọi giá trị từ bộ nhớ và đưa vào biểu thức
+    String memStr = _memory.toString();
+    if (memStr.endsWith('.0')) memStr = memStr.substring(0, memStr.length - 2);
+    addToExpression(memStr);
   }
 
   void memoryClear() {
