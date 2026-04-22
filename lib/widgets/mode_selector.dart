@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/calculator_provider.dart';
 import '../models/calculator_mode.dart';
+import '../screens/history_screen.dart'; //THÊM DÒNG NÀY ĐỂ IMPORT MÀN HÌNH LỊCH SỬ
 
 class ModeSelector extends StatelessWidget {
   const ModeSelector({Key? key}) : super(key: key);
@@ -31,7 +32,6 @@ class ModeSelector extends StatelessWidget {
                 }
               },
               items: CalculatorMode.values.map((CalculatorMode mode) {
-                //Viết hoa chữ cái đầu (VD: basic -> Basic)
                 String modeName = mode.toString().split('.').last;
                 modeName = modeName[0].toUpperCase() + modeName.substring(1);
                 
@@ -43,11 +43,14 @@ class ModeSelector extends StatelessWidget {
             ),
           ),
 
-          //Nút xem lịch sử
           IconButton(
-            icon: const Icon(Icons.history),
+            icon: const Icon(Icons.history, size: 28),
             onPressed: () {
-              //TODO: Điều hướng sang History Screen hoặc mở BottomSheet
+              //Lệnh chuyển sang màn hình HistoryScreen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HistoryScreen()),
+              );
             },
           ),
         ],
