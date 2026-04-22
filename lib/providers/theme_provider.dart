@@ -34,24 +34,24 @@ class ThemeProvider extends ChangeNotifier {
   ThemeData get lightTheme => ThemeData(
     brightness: Brightness.light,
     fontFamily: 'Roboto', // Font chữ bắt buộc
-    scaffoldBackgroundColor: const Color(0xFFF5F5F5), // Nền sáng
+    scaffoldBackgroundColor: const Color(0xFFF5F5F5), //Nền sáng
     primaryColor: const Color(0xFF1E1E1E), 
-    cardColor: const Color(0xFF424242), // Màu Secondary dùng cho phím bấm
+    cardColor: const Color(0xFF424242), //Màu Secondary dùng cho phím bấm
     colorScheme: const ColorScheme.light(
       primary: Color(0xFF1E1E1E),
-      secondary: Color(0xFFFF6B6B), // Accent (Màu đỏ/cam cho phím =, toán tử)
+      secondary: Color(0xFFFF6B6B), //Accent (Màu đỏ/cam cho phím =, toán tử)
     ),
   );
 
   ThemeData get darkTheme => ThemeData(
     brightness: Brightness.dark,
     fontFamily: 'Roboto',
-    scaffoldBackgroundColor: const Color(0xFF000000), // Nền tối
+    scaffoldBackgroundColor: const Color(0xFF000000), //Nền tối
     primaryColor: const Color(0xFF121212),
-    cardColor: const Color(0xFF2C2C2C), // Secondary (phím bấm tối)
+    cardColor: const Color(0xFF2C2C2C), //Secondary (phím bấm tối)
     colorScheme: const ColorScheme.dark(
       primary: Color(0xFF121212),
-      secondary: Color(0xFF4ECDC4), // Accent (Màu xanh ngọc)
+      secondary: Color(0xFF4ECDC4), //Accent (Màu xanh ngọc)
     ),
   );
 }

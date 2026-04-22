@@ -18,21 +18,21 @@ class CalculatorScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Khu vực hiển thị (Màn hình máy tính)
+            //Khu vực hiển thị (Màn hình máy tính)
             const Expanded(
               flex: 3,
               child: DisplayArea(),
             ),
 
-            // Thanh điều hướng chế độ và cài đặt
+            //Thanh điều hướng chế độ và cài đặt
             const ModeSelector(),
 
-            // Khu vực phím bấm
+            //Khu vực phím bấm
             Expanded(
               flex: 6,
               child: Consumer<CalculatorProvider>(
                 builder: (context, provider, child) {
-                  // Hiển thị lưới tương ứng với Mode
+                  //Hiển thị lưới tương ứng với Mode
                   if (provider.mode == CalculatorMode.scientific) {
                     return const ScientificButtonGrid(); 
                   } else if (provider.mode == CalculatorMode.programmer) {

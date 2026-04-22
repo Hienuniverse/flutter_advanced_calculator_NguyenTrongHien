@@ -5,7 +5,7 @@ class ExpressionParser {
     if (expression.isEmpty) return '0';
 
     try {
-      // Chuẩn hóa chuỗi [cite: 113, 119]
+      //Chuẩn hóa chuỗi [cite: 113, 119]
       String finalExpression = expression
           .replaceAll('×', '*')
           .replaceAll('÷', '/')
@@ -20,7 +20,7 @@ class ExpressionParser {
       double eval = exp.evaluate(EvaluationType.REAL, cm);
 
       if (eval.isInfinite || eval.isNaN) {
-        return 'Error: Division by zero'; // Bắt lỗi chia cho 0 [cite: 114, 185]
+        return 'Error: Division by zero'; //Bắt lỗi chia cho 0
       }
 
       String result = eval.toString();
@@ -29,7 +29,7 @@ class ExpressionParser {
       }
       return result;
     } catch (e) {
-      return 'Error: Invalid input'; // Bắt lỗi cú pháp [cite: 114, 185]
+      return 'Error: Invalid input'; //Bắt lỗi cú pháp
     }
   }
 }

@@ -7,7 +7,7 @@ import 'calculator_button.dart';
 class ScientificButtonGrid extends StatelessWidget {
   const ScientificButtonGrid({Key? key}) : super(key: key);
 
-  // Mảng 36 phím theo đúng cấu trúc của Lab (6 cột x 6 hàng) 
+  //Mảng 36 phím theo đúng cấu trúc của Lab (6 cột x 6 hàng) 
   final List<String> buttons = const [
     '2nd', 'sin', 'cos', 'tan', 'ln', 'log',
     'x²', '√', 'x^y', '(', ')', '÷',
@@ -25,8 +25,8 @@ class ScientificButtonGrid extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       itemCount: buttons.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 6, // 6 cột cho Scientific Mode
-        crossAxisSpacing: 8, // Thu nhỏ spacing lại một chút vì nhiều cột
+        crossAxisCount: 6, //6 cột cho Scientific Mode
+        crossAxisSpacing: 8, //Thu nhỏ spacing lại một chút vì nhiều cột
         mainAxisSpacing: 8,
         childAspectRatio: 1.0, 
       ),
@@ -36,7 +36,7 @@ class ScientificButtonGrid extends StatelessWidget {
         Color? bgColor;
         Color? textColor;
         
-        // Cấu hình màu sắc
+        //Cấu hình màu sắc
         if (['÷', '×', '-', '+', '='].contains(btnText)) {
           bgColor = Theme.of(context).colorScheme.secondary;
           textColor = Colors.white;
@@ -44,7 +44,7 @@ class ScientificButtonGrid extends StatelessWidget {
           bgColor = Colors.grey[700];
           textColor = Colors.white;
         } else if (['sin', 'cos', 'tan', 'ln', 'log', 'x²', '√', 'x^y', '(', ')', '2nd', 'π'].contains(btnText)) {
-          bgColor = Theme.of(context).cardColor.withOpacity(0.7); // Màu nhạt hơn cho phím chức năng
+          bgColor = Theme.of(context).cardColor.withOpacity(0.7); //Màu nhạt hơn cho phím chức năng
         }
 
         return CalculatorButton(
@@ -61,12 +61,12 @@ class ScientificButtonGrid extends StatelessWidget {
                 context.read<HistoryProvider>().addHistory(provider.expression, provider.result);
               }
             }
-            // Memory [cite: 102]
+            // Memory
             else if (btnText == 'MC') provider.memoryClear();
             else if (btnText == 'MR') provider.memoryRecall();
             else if (btnText == 'M+') provider.memoryAdd();
             else if (btnText == 'M-') provider.memorySubtract();
-            // Math Functions [cite: 102]
+            // Math Functions
             else if (['sin', 'cos', 'tan', 'ln', 'log'].contains(btnText)) {
               provider.addScientificFunction(btnText);
             } 

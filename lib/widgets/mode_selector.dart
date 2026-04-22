@@ -15,7 +15,7 @@ class ModeSelector extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Nút Dropdown để chọn chế độ
+          //Nút Dropdown để chọn chế độ
           DropdownButtonHideUnderline(
             child: DropdownButton<CalculatorMode>(
               value: provider.mode,
@@ -31,7 +31,7 @@ class ModeSelector extends StatelessWidget {
                 }
               },
               items: CalculatorMode.values.map((CalculatorMode mode) {
-                // Viết hoa chữ cái đầu (VD: basic -> Basic)
+                //Viết hoa chữ cái đầu (VD: basic -> Basic)
                 String modeName = mode.toString().split('.').last;
                 modeName = modeName[0].toUpperCase() + modeName.substring(1);
                 
@@ -43,11 +43,11 @@ class ModeSelector extends StatelessWidget {
             ),
           ),
 
-          // Nút xem lịch sử
+          //Nút xem lịch sử
           IconButton(
             icon: const Icon(Icons.history),
             onPressed: () {
-              // TODO: Điều hướng sang History Screen hoặc mở BottomSheet
+              //TODO: Điều hướng sang History Screen hoặc mở BottomSheet
             },
           ),
         ],

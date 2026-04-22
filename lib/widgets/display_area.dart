@@ -10,17 +10,17 @@ class DisplayArea extends StatelessWidget {
     return Consumer<CalculatorProvider>(
       builder: (context, provider, child) {
         return Container(
-          // Padding theo Specs của Figma
+          //Padding theo Specs của Figma
           padding: const EdgeInsets.all(24.0),
           alignment: Alignment.bottomRight,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              // 1. Dòng phép tính hiện tại (cho phép cuộn ngang nếu dài)
+              //1. Dòng phép tính hiện tại (cho phép cuộn ngang nếu dài)
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                reverse: true, // Cuộn từ phải sang trái
+                reverse: true, //Cuộn từ phải sang trái
                 child: Text(
                   provider.expression,
                   style: const TextStyle(fontSize: 24, color: Colors.grey),
@@ -28,7 +28,7 @@ class DisplayArea extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               
-              // 2. Kết quả (Tự động thu nhỏ cỡ chữ nếu số quá dài)
+              //2. Kết quả (Tự động thu nhỏ cỡ chữ nếu số quá dài)
               FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerRight,
@@ -37,7 +37,7 @@ class DisplayArea extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 48, 
                     fontWeight: FontWeight.bold,
-                    // Đổi màu đỏ nếu có lỗi
+                    //Đổi màu đỏ nếu có lỗi
                     color: provider.result.startsWith('Error') ? Colors.redAccent : null,
                   ),
                 ),

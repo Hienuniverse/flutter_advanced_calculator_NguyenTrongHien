@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/calculator_provider.dart';
-import '../providers/history_provider.dart'; // THÊM DÒNG NÀY ĐỂ GỌI HISTORY
+import '../providers/history_provider.dart'; //THÊM DÒNG NÀY ĐỂ GỌI HISTORY
 import 'calculator_button.dart';
 
 class BasicButtonGrid extends StatelessWidget {
@@ -24,8 +24,8 @@ class BasicButtonGrid extends StatelessWidget {
       itemCount: buttons.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
-        crossAxisSpacing: 12, // [cite: 31]
-        mainAxisSpacing: 12, // [cite: 31]
+        crossAxisSpacing: 12, 
+        mainAxisSpacing: 12,
         childAspectRatio: 1.0, 
       ),
       itemBuilder: (context, index) {
@@ -47,17 +47,16 @@ class BasicButtonGrid extends StatelessWidget {
           backgroundColor: bgColor,
           textColor: textColor,
           onTap: () {
-            // Mapping hành động tương ứng với nút bấm
+            //Mapping hành động tương ứng với nút bấm
             if (btnText == 'C') {
               provider.clear();
             } else if (btnText == 'CE') {
               provider.clearEntry();
             } else if (btnText == '=') {
               
-              // --- ĐOẠN CODE BẠN YÊU CẦU ĐƯỢC ĐẶT Ở ĐÂY ---
               provider.calculate();
               if (!provider.result.startsWith('Error')) {
-                // Đọc HistoryProvider thông qua context để lưu kết quả [cite: 178]
+                //Đọc HistoryProvider thông qua context để lưu kết quả
                 context.read<HistoryProvider>().addHistory(provider.expression, provider.result);
               }
               // ---------------------------------------------

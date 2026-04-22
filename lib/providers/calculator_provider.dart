@@ -10,7 +10,7 @@ class CalculatorProvider extends ChangeNotifier {
   double _memory = 0;
   bool _hasMemory = false;
 
-  // Getters để UI có thể đọc dữ liệu
+  //Getters để UI có thể đọc dữ liệu
   String get expression => _expression;
   String get result => _result;
   CalculatorMode get mode => _mode;
@@ -29,28 +29,28 @@ class CalculatorProvider extends ChangeNotifier {
     if (_expression.isEmpty) return;
 
     try {
-      // 1. Chuẩn hóa chuỗi (Sanitize Expression)
+      //1. Chuẩn hóa chuỗi (Sanitize Expression)
       String finalExpression = _expression
           .replaceAll('×', '*')
           .replaceAll('÷', '/')
           .replaceAll('π', '3.14159265359')
           .replaceAll('e', '2.71828182846')
-          .replaceAll('%', '/100'); // Xử lý phần trăm [cite: 100, 102]
+          .replaceAll('%', '/100'); //Xử lý phần trăm
 
-      // 2. Phân tích và tính toán [cite: 16, 110]
+      //2. Phân tích và tính toán
       Parser p = Parser();
       Expression exp = p.parse(finalExpression);
       
       ContextModel cm = ContextModel();
       
-      // Tính toán kết quả thực tế
+      //Tính toán kết quả thực tế
       double eval = exp.evaluate(EvaluationType.REAL, cm);
 
-      // 3. Xử lý các trường hợp lỗi như chia cho 0 [cite: 114, 185]
+      //3. Xử lý các trường hợp lỗi như chia cho 0
       if (eval.isInfinite || eval.isNaN) {
         _result = 'Error: Division by zero';
       } else {
-        // Làm đẹp kết quả: Xóa đuôi ".0" nếu là số nguyên
+        //Làm đẹp kết quả: Xóa đuôi ".0" nếu là số nguyên
         _result = eval.toString();
         if (_result.endsWith('.0')) {
           _result = _result.substring(0, _result.length - 2);
@@ -60,11 +60,11 @@ class CalculatorProvider extends ChangeNotifier {
       // TODO: Gọi hàm từ HistoryProvider để lưu vào lịch sử tại đây [cite: 17, 122]
 
     } catch (e) {
-      // Bắt lỗi khi người dùng nhập sai cú pháp [cite: 114]
+      //Bắt lỗi khi người dùng nhập sai cú pháp
       _result = 'Error: Invalid input';
     }
     
-    notifyListeners(); // Báo cho UI cập nhật
+    notifyListeners(); //Báo cho UI cập nhật
   }
 
   void clear() {
@@ -93,9 +93,9 @@ class CalculatorProvider extends ChangeNotifier {
   void toggleSign() {
     if (_result != '0' && !_result.startsWith('Error')) {
       if (_result.startsWith('-')) {
-        _result = _result.substring(1); // Bỏ dấu trừ
+        _result = _result.substring(1); //Bỏ dấu trừ
       } else {
-        _result = '-$_result'; // Thêm dấu trừ
+        _result = '-$_result'; //Thêm dấu trừ
       }
       notifyListeners();
     }
@@ -106,10 +106,10 @@ class CalculatorProvider extends ChangeNotifier {
   }
 
   void addScientificFunction(String func) {
-    addToExpression('$func('); // Thêm hàm khoa học kèm dấu ngoặc mở, VD: sin( [cite: 115, 116]
+    addToExpression('$func('); //Thêm hàm khoa học kèm dấu ngoặc mở, VD: sin(
   }
 
-  // --- Các hàm bộ nhớ (Memory Functions) --- [cite: 19, 121, 180]
+  // --- Các hàm bộ nhớ (Memory Functions) ---
 
   void memoryAdd() {
     _memory += double.tryParse(_result) ?? 0;

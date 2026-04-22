@@ -19,7 +19,7 @@ class ProgrammerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<CalculatorProvider>(context);
 
-    // Lấy kết quả hiện tại ép kiểu sang số nguyên để chuyển hệ cơ số [cite: 104]
+    //Lấy kết quả hiện tại ép kiểu sang số nguyên để chuyển hệ cơ số
     int currentValue = int.tryParse(provider.result.split('.')[0]) ?? 0;
 
     return Column(
@@ -44,7 +44,7 @@ class ProgrammerView extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             itemCount: progButtons.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5, // 5 cột cho dễ xếp phím A-F [cite: 103]
+              crossAxisCount: 5, //5 cột cho dễ xếp phím A-F
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
               childAspectRatio: 1.0,
@@ -53,7 +53,7 @@ class ProgrammerView extends StatelessWidget {
               final btnText = progButtons[index];
               return CalculatorButton(
                 text: btnText,
-                // Các phím chữ (A-F) và phép toán Bitwise [cite: 105, 106] đổi màu cho khác biệt
+                //Các phím chữ (A-F) và phép toán Bitwise [cite: 105, 106] đổi màu cho khác biệt
                 backgroundColor: ['A','B','C','D','E','F', 'AND', 'OR', 'XOR', 'NOT', '<<', '>>'].contains(btnText) 
                   ? Theme.of(context).cardColor.withOpacity(0.6) 
                   : null,
@@ -84,7 +84,7 @@ class ProgrammerView extends StatelessWidget {
           Expanded(
             child: Text(
               value.isEmpty ? '0' : value, 
-              style: const TextStyle(fontSize: 18, fontFamily: 'monospace') // Dùng font monospace cho dễ nhìn code
+              style: const TextStyle(fontSize: 18, fontFamily: 'monospace') 
             ),
           ),
         ],

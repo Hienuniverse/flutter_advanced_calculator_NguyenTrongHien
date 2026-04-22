@@ -5,7 +5,7 @@ class CalculatorButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color? backgroundColor;
   final Color? textColor;
-  final bool isFlex; // Dùng cho nút số '0' nếu muốn nó rộng hơn
+  final bool isFlex; //Dùng cho nút số '0' nếu muốn nó rộng hơn
 
   const CalculatorButton({
     Key? key,
@@ -18,10 +18,10 @@ class CalculatorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Sử dụng InkWell để có hiệu ứng ripple (gợn sóng) khi bấm
+    //Sử dụng InkWell để có hiệu ứng ripple (gợn sóng) khi bấm
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16), // Border radius theo spec
+      borderRadius: BorderRadius.circular(16), //Border radius theo spec
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor ?? Theme.of(context).cardColor,
@@ -38,7 +38,7 @@ class CalculatorButton extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 24, // Medium theo spec cho display, nút có thể chỉnh nhỏ lại một chút
+              fontSize: 24, //Medium theo spec cho display, nút có thể chỉnh nhỏ lại một chút
               fontWeight: FontWeight.w500,
               color: textColor ?? Theme.of(context).textTheme.bodyLarge?.color,
             ),

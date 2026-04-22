@@ -11,10 +11,10 @@ class StorageService {
   Future<void> saveHistory(List<CalculationHistory> historyList) async {
     final prefs = await SharedPreferences.getInstance();
     
-    // Chuyển List Object thành List JSON String
+    //Chuyển List Object thành List JSON String
     List<String> jsonList = historyList.map((item) => jsonEncode(item.toJson())).toList();
     
-    // Giới hạn lưu 50 phép tính gần nhất (như yêu cầu lab)
+    //Giới hạn lưu 50 phép tính gần nhất (như yêu cầu lab)
     if (jsonList.length > 50) {
       jsonList = jsonList.sublist(jsonList.length - 50);
     }
@@ -40,6 +40,6 @@ class StorageService {
 
   Future<bool> loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_themeKey) ?? false; // Mặc định là false (Light Mode)
+    return prefs.getBool(_themeKey) ?? false; //Mặc định là false (Light Mode)
   }
 }

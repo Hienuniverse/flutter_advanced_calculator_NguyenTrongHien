@@ -16,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Settings')),
       body: ListView(
         children: [
-          // Cài đặt Theme [cite: 143]
+          //Cài đặt Theme
           SwitchListTile(
             title: const Text('Dark Mode'),
             value: themeProvider.themeMode == ThemeMode.dark,
@@ -25,7 +25,7 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
           const Divider(),
-          // Cài đặt đơn vị đo góc (Chỉ hữu ích cho Scientific Mode) [cite: 145]
+          //Cài đặt đơn vị đo góc (Chỉ hữu ích cho Scientific Mode)
           ListTile(
             title: const Text('Angle Mode'),
             trailing: ToggleButtons(

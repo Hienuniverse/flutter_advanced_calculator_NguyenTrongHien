@@ -16,7 +16,7 @@ class HistoryScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.delete_outline),
             onPressed: () {
-              // Bật Dialog xác nhận trước khi xóa [cite: 149]
+              //Bật Dialog xác nhận trước khi xóa
               historyProvider.clearHistory();
             },
           )
@@ -41,7 +41,7 @@ class HistoryScreen extends StatelessWidget {
                     textAlign: TextAlign.right,
                   ),
                   onTap: () {
-                    // TODO: Truyền item.result ngược lại màn hình chính khi click [cite: 94]
+                    //TODO: Truyền item.result ngược lại màn hình chính khi click
                     Navigator.pop(context);
                   },
                 );
