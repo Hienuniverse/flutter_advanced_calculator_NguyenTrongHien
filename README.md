@@ -10,12 +10,15 @@
 - Hỗ trợ Light / Dark Mode.
 
 ## Screenshots
+basic mode
 <img width="1920" height="1080" alt="Screenshot 2026-04-19 152444" src="https://github.com/user-attachments/assets/02d0e377-7cb6-412e-b5e6-06d689041c88" />
-*(Thêm ảnh Scientific và Programmer tương tự)*
+scientific mode
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/68276e06-8188-4027-bb9c-3c8a6c74e5d6" />
+programmer mode
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5fb5706b-095f-40b3-a46d-2631fb8e139d" />
 
 ## Architecture Diagram
 Dự án sử dụng Clean Architecture kết hợp với Provider State Management.
-*(Bro có thể vẽ một hình khối đơn giản trên draw.io rồi chèn link vào đây, hoặc tham khảo file `docs/ARCHITECTURE.md`)*
 
 ## Setup Instructions
 1. Clone repository này về máy.
