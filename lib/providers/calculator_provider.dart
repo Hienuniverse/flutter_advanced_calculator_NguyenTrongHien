@@ -10,7 +10,7 @@ class CalculatorProvider extends ChangeNotifier {
   double _memory = 0;
   bool _hasMemory = false;
 
-  // Getters để UI truy xuất dữ liệu
+  //Getters để UI truy xuất dữ liệu
   String get expression => _expression;
   String get result => _result;
   CalculatorMode get mode => _mode;
@@ -18,18 +18,43 @@ class CalculatorProvider extends ChangeNotifier {
   double get memory => _memory;
   bool get hasMemory => _hasMemory;
 
-  // Thêm giá trị vào biểu thức (số, toán tử)
+  //Thêm giá trị vào biểu thức (số, toán tử)
   void addToExpression(String value) {
     _expression += value;
     notifyListeners();
   }
 
-  // Hàm tính toán chính
+  //Hàm tính toán chính
   void calculate() {
     if (_expression.isEmpty) return;
 
+    if (_mode == CalculatorMode.programmer) {
+      try {
+        //Tách chuỗi theo các toán tử (Ví dụ: "5AND3" -> tính 5 & 3)
+        if (_expression.contains('AND')) {
+          var parts = _expression.split('AND');
+          _result = (int.parse(parts[0]) & int.parse(parts[1])).toString();
+        } else if (_expression.contains('OR')) {
+          var parts = _expression.split('OR');
+          _result = (int.parse(parts[0]) | int.parse(parts[1])).toString();
+        } else if (_expression.contains('XOR')) {
+           var parts = _expression.split('XOR');
+          _result = (int.parse(parts[0]) ^ int.parse(parts[1])).toString();
+        } else if (_expression.contains('<<')) {
+           var parts = _expression.split('<<');
+          _result = (int.parse(parts[0]) << int.parse(parts[1])).toString();
+        }
+        notifyListeners();
+        return; //Tính xong thì thoát luôn, không chạy xuống math_expressions nữa
+      } catch (e) {
+        _result = 'Error: Invalid input';
+        notifyListeners();
+        return;
+      }
+    }
+
     try {
-      // 1. Chuẩn hóa biểu thức sang định dạng máy tính hiểu được
+      //1. Chuẩn hóa biểu thức sang định dạng máy tính hiểu được
       String finalExpression = _expression
           .replaceAll('×', '*')
           .replaceAll('÷', '/')
@@ -37,14 +62,14 @@ class CalculatorProvider extends ChangeNotifier {
           .replaceAll('e', '2.71828182846')
           .replaceAll('%', '/100');
 
-      // 2. Sử dụng thư viện math_expressions để phân tích chuỗi
+      //2. Sử dụng thư viện math_expressions để phân tích chuỗi
       Parser p = Parser();
       Expression exp = p.parse(finalExpression);
       ContextModel cm = ContextModel();
       
       double eval = exp.evaluate(EvaluationType.REAL, cm);
 
-      // 3. Xử lý kết quả và các trường hợp lỗi
+      //3. Xử lý kết quả và các trường hợp lỗi
       if (eval.isInfinite || eval.isNaN) {
         _result = 'Error: Division by zero';
       } else {
@@ -61,14 +86,14 @@ class CalculatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Xóa toàn bộ
+  //Xóa toàn bộ
   void clear() {
     _expression = '';
     _result = '0';
     notifyListeners();
   }
 
-  // Xóa ký tự cuối cùng (Backspread)
+  //Xóa ký tự cuối cùng (Backspread)
   void clearEntry() {
     if (_expression.isNotEmpty) {
       _expression = _expression.substring(0, _expression.length - 1);
@@ -76,19 +101,19 @@ class CalculatorProvider extends ChangeNotifier {
     }
   }
 
-  // Đổi chế độ máy tính (Basic/Scientific/Programmer)
+  //Đổi chế độ máy tính (Basic/Scientific/Programmer)
   void toggleMode(CalculatorMode newMode) {
     _mode = newMode;
     notifyListeners();
   }
 
-  // Đổi đơn vị góc (DEG/RAD)
+  //Đổi đơn vị góc (DEG/RAD)
   void toggleAngleMode() {
     _angleMode = _angleMode == AngleMode.degrees ? AngleMode.radians : AngleMode.degrees;
     notifyListeners();
   }
 
-  // SỬA LỖI: Hàm đổi dấu âm/dương (toggleSign)
+  //SỬA LỖI: Hàm đổi dấu âm/dương (toggleSign)
   void toggleSign() {
     if (_expression.isEmpty && _result != '0' && !_result.startsWith('Error')) {
       // Đổi dấu dựa trên kết quả trước đó
@@ -112,12 +137,12 @@ class CalculatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Thêm ký hiệu %
+  //Thêm ký hiệu %
   void addPercentage() {
     addToExpression('%');
   }
 
-  // Thêm các hàm khoa học (sin, cos, log...)
+  //Thêm các hàm khoa học (sin, cos, log...)
   void addScientificFunction(String func) {
     addToExpression('$func(');
   }
@@ -139,7 +164,7 @@ class CalculatorProvider extends ChangeNotifier {
   }
 
   void memoryRecall() {
-    // Gọi giá trị từ bộ nhớ và đưa vào biểu thức
+    //Gọi giá trị từ bộ nhớ và đưa vào biểu thức
     String memStr = _memory.toString();
     if (memStr.endsWith('.0')) memStr = memStr.substring(0, memStr.length - 2);
     addToExpression(memStr);
